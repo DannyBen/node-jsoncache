@@ -1,21 +1,27 @@
 {
   "name": "jsoncache",
-  "version": "0.1.1",
+  "version": "0.1.2",
+
   "description": "File based cache for JSON objects",
+  "keywords": ["cache", "filecache"],
+  "author": "Danny Ben Shitrit <db@dannyben.com> (http://sector-seven.net/)",
+  "license": "MIT",
+
   "main": "jsoncache.js",
   "dependencies": {
     "MD5": "^1.2.1"
   },
+  
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Danny Ben Shitrit <db@dannyben.com> (http://sector-seven.net/)",
-  "license": "MIT",
+  
   "repository" : { 
     "type" : "git", 
     "url" : "https://github.com/DannyBen/node-jsoncache"
   },
+  
   "bugs": {
     "url": "https://github.com/DannyBen/node-jsoncache/issues"
   }

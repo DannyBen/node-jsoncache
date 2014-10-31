@@ -1,4 +1,4 @@
-var Cache = require('jsoncache');
+var Cache = require('./jsoncache');
 var cache = new Cache('./cache', 1);
 
 var storeMe = { firstName: "Bruce", lastName: "Dickinson" }
@@ -10,11 +10,11 @@ console.log(restored);
 
 // Using the async methods
 cache.set('asynckey', storeMe, function(err) {
-	if(err) throw err;
+	if(err) console.log(err.message);
 });
 
 cache.get('asynckey', function(err, data) {
-	if(err) throw err;
+	if(err) console.log(err.message);
 	console.log(data);
 });
 
