@@ -1,0 +1,15 @@
+{
+  "name": "jsoncache",
+  "version": "0.1.0",
+  "description": "File based cache for JSON objects",
+  "main": "jsoncache.js",
+  "dependencies": {
+    "MD5": "^1.2.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Danny Ben Shitrit <db@dannyben.com> (http://sector-seven.net/)",
+  "license": "MIT"
+}
