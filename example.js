@@ -1,4 +1,4 @@
-var Cache = require('./jsoncache');
+var Cache = require('jsoncache');
 var cache = new Cache('./cache', 1);
 
 var storeMe = { firstName: "Bruce", lastName: "Dickinson" }

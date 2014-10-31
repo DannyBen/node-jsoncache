@@ -9,7 +9,7 @@ A Node.js module for caching JSON objects.
 ## Use
 
 ~~~ javascript
-var Cache = require('./jsoncache');
+var Cache = require('jsoncache');
 
 // Set cache folder and cache life in minutes
 var cache = new Cache('./cache', 60);
