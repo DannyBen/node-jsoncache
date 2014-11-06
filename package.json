@@ -1,8 +1,8 @@
 {
   "name": "jsoncache",
-  "version": "0.1.2",
+  "version": "0.2.0",
 
-  "description": "File based cache for JSON objects",
+  "description": "File based cache for JSON objects or raw data",
   "keywords": ["cache", "filecache"],
   "author": "Danny Ben Shitrit <db@dannyben.com> (http://sector-seven.net/)",
   "license": "MIT",

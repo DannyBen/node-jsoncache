@@ -1,6 +1,6 @@
 # JsonCache
 
-A Node.js module for caching JSON objects.
+A Node.js module for caching JSON objects or raw data.
 
 ## Install
 
@@ -12,7 +12,7 @@ A Node.js module for caching JSON objects.
 var Cache = require('jsoncache');
 
 // Set cache folder and cache life in minutes
-var cache = new Cache('./cache', 60);
+var cache = new Cache({dir: './cache', life: 60, mode: 'json');
 
 var storeMe = { firstName: "Bruce", lastName: "Dickinson" }
 

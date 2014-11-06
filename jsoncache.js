@@ -1,9 +1,11 @@
 var fs = require('fs');
 var md5 = require('MD5');
 
-module.exports = function Cache(folder, life) {
-	this.folder = folder;	
-	this.life = life;
+module.exports = function Cache(opts) {
+	if (opts === undefined) opts = {};
+	this.dir  = opts.dir  || './cache';
+	this.life = opts.life || 240;
+	this.mode = opts.mode || 'json'; // json | string | raw
 	self = this;
 
 	this.get = function(key, fn) {
@@ -20,7 +22,12 @@ module.exports = function Cache(folder, life) {
 					if(diff>self.life) return fn(null, undefined);
 					fs.readFile(path, function(err, data) {
 						if(err) return fn(err, undefined);
-						fn(null, JSON.parse(data));
+						var result = self.mode == 'json' 
+							? JSON.parse(data)
+							: self.mode == 'string'
+							? data.toString()
+							: data;
+						fn(null, result);
 					});
 				});
 			});
@@ -29,10 +36,10 @@ module.exports = function Cache(folder, life) {
 	
 	this.set = function(key, data, fn) {
 		if(fn === undefined) fn = function(err) {};
-		var json = JSON.stringify(data);
+		if (this.mode == 'json') data = JSON.stringify(data);
 		self.getPath(key, function(err, path) {
 			if(err) return fn(err);
-			fs.writeFile(path, json, function(err) {
+			fs.writeFile(path, data, function(err) {
 				if(fn !== undefined) fn(err);
 			});
 		});
@@ -45,30 +52,34 @@ module.exports = function Cache(folder, life) {
 		var now = new Date();
 		var diff = (now-fileTime)/60000;
 		if(diff>this.life) return undefined;
-		var json = fs.readFileSync(path);
-		return JSON.parse(json);
+		var data = fs.readFileSync(path);
+		return self.mode == 'json' 
+			? JSON.parse(data)
+			: self.mode == 'string'
+			? data.toString()
+			: data;
 	}
 
 	this.setSync = function(key, data) {
-		var json = JSON.stringify(data);
-		fs.writeFileSync(this.getPathSync(key), json)
+		if (!this.raw) data = JSON.stringify(data);
+		fs.writeFileSync(this.getPathSync(key), data)
 	}
 	
 	this.getPathSync = function(key) {
-		if(!fs.existsSync(this.folder)) {
-			throw new Error('Cache directory does not exist: ' + this.folder);
+		if(!fs.existsSync(this.dir)) {
+			throw new Error('Cache directory does not exist: ' + this.dir);
 		}
-		return this.folder + '/' + this.getFilename(key)
+		return this.dir + '/' + this.getFilename(key)
 	}
 
 	this.getPath = function(key, fn) {
 		if(fn === undefined) fn = function(err, path) {};
-		fs.exists(self.folder, function(exists) {
+		fs.exists(self.dir, function(exists) {
 			if(!exists) {
-				var err = new Error('Cache directory does not exist: ' + self.folder);
+				var err = new Error('Cache directory does not exist: ' + self.dir);
 				return fn(err, undefined);
 			}
-			fn(null, self.folder + '/' + self.getFilename(key));
+			fn(null, self.dir + '/' + self.getFilename(key));
 		});
 	}
 
