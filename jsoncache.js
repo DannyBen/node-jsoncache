@@ -4,7 +4,7 @@ var md5 = require('MD5');
 module.exports = function Cache(opts) {
 	if (opts === undefined) opts = {};
 	this.dir  = opts.dir  || './cache';
-	this.life = opts.life || 240;
+	this.life = opts.life === undefined ? 240 : opts.life;
 	this.mode = opts.mode || 'json'; // json | string | raw
 	self = this;
 
