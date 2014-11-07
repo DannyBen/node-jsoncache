@@ -11,23 +11,22 @@ A Node.js module for caching JSON objects or raw data.
 ~~~ javascript
 var Cache = require('jsoncache');
 
-// Set cache folder and cache life in minutes
-var cache = new Cache({dir: './cache', life: 60, mode: 'json');
+var cache = new Cache({ dir: './cache', life: 1, mode: 'json' });
+var data = { firstName: "Bruce", lastName: "Dickinson" };
 
-var storeMe = { firstName: "Bruce", lastName: "Dickinson" }
-
-// Using the sync methods
-cache.setSync('testkey', storeMe);
-var restored = cache.getSync('testkey');
+// Using the sync methods 
+cache.setSync('key', data);
+var restored = cache.getSync('key');
 console.log(restored);
 
 // Using the async methods
-cache.set('asynckey', storeMe, function(err) {
-	if(err) throw err;
+cache.set('keyasync', data, function(err) {
+	if(err) console.log(err.message);
 });
 
-cache.get('asynckey', function(err, data) {
-	if(err) throw err;
+cache.get('keyasync', function(err, data) {
+	if(err) console.log(err.message);
+	if(data === undefined) console.log('cache expired');
 	console.log(data);
 });
 ~~~

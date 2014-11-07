@@ -61,7 +61,7 @@ module.exports = function Cache(opts) {
 	}
 
 	this.setSync = function(key, data) {
-		if (!this.raw) data = JSON.stringify(data);
+		if (this.mode == 'json') data = JSON.stringify(data);
 		fs.writeFileSync(this.getPathSync(key), data)
 	}
 	
